@@ -23,8 +23,7 @@ namespace App.Metrics.Formatters.Elasticsearch
             TextWriter textWriter,
             string elasticsearchIndex,
             Func<string, string, string> metricNameFormatter = null,
-            Func<string, string> metricTagValueFormatter = null,
-            GeneratedMetricNameMapping dataKeys = null)
+            Func<string, string> metricTagValueFormatter = null)
         {
             if (string.IsNullOrWhiteSpace(elasticsearchIndex))
             {
@@ -36,36 +35,13 @@ namespace App.Metrics.Formatters.Elasticsearch
             _bulkPayload = new BulkPayload(serializer, elasticsearchIndex);
             _metricNameFormatter = metricNameFormatter ?? ElasticsearchFormatterConstants.ElasticsearchDefaults.MetricNameFormatter;
             _metricTagValueFormatter = metricTagValueFormatter ?? ElasticsearchFormatterConstants.ElasticsearchDefaults.MetricTagValueFormatter;
-
-            MetricNameMapping = dataKeys ?? new GeneratedMetricNameMapping(
-                                    histogram: ElasticsearchFormatterConstants.ElasticsearchDefaults.CustomHistogramDataKeys,
-                                    meter: ElasticsearchFormatterConstants.ElasticsearchDefaults.CustomMeterDataKeys);
         }
-
-        /// <inheritdoc />
-        public GeneratedMetricNameMapping MetricNameMapping { get; }
 
         /// <inheritdoc />
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        /// <inheritdoc />
-        public void Write(string context, string name, object value, MetricTags tags, DateTime timestamp)
-        {
-            var tagKeyValues = tags.ToDictionary(_metricTagValueFormatter);
-            var measurement = _metricNameFormatter(context, name);
-
-            _bulkPayload.Add(
-                new MetricsDocument
-                {
-                    MeasurementType = tagKeyValues["mtype"],
-                    MeasurementName = measurement,
-                    Fields = new Dictionary<string, object> { { "value", value } },
-                    Tags = tagKeyValues
-                });
         }
 
         /// <inheritdoc />
@@ -81,6 +57,22 @@ namespace App.Metrics.Formatters.Elasticsearch
                     MeasurementType = tagKeyValues["mtype"],
                     MeasurementName = measurement,
                     Fields = fields,
+                    Tags = tagKeyValues
+                });
+        }
+
+        /// <inheritdoc />
+        public void Write(string context, string name, string field, object value, MetricTags tags, DateTime timestamp)
+        {
+            var tagKeyValues = tags.ToDictionary(_metricTagValueFormatter);
+            var measurement = _metricNameFormatter(context, name);
+
+            _bulkPayload.Add(
+                new MetricsDocument
+                {
+                    MeasurementType = tagKeyValues["mtype"],
+                    MeasurementName = measurement,
+                    Fields = new Dictionary<string, object> { { "value", value } },
                     Tags = tagKeyValues
                 });
         }

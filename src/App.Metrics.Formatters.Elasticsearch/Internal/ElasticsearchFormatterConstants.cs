@@ -12,31 +12,31 @@ namespace App.Metrics.Formatters.Elasticsearch.Internal
     {
         public class ElasticsearchDefaults
         {
-            public static readonly Dictionary<HistogramValueDataKeys, string> CustomHistogramDataKeys = new Dictionary<HistogramValueDataKeys, string>
-                                                                                                        {
-                                                                                                            {
-                                                                                                                HistogramValueDataKeys.Count,
-                                                                                                                "countHist"
-                                                                                                            },
-                                                                                                            {
-                                                                                                                HistogramValueDataKeys.UserLastValue,
-                                                                                                                "userLast"
-                                                                                                            },
-                                                                                                            {
-                                                                                                                HistogramValueDataKeys.UserMinValue,
-                                                                                                                "userMin"
-                                                                                                            },
-                                                                                                            {
-                                                                                                                HistogramValueDataKeys.UserMaxValue,
-                                                                                                                "userMax"
-                                                                                                            }
-                                                                                                        };
+            // public static readonly Dictionary<HistogramValueDataKeys, string> CustomHistogramDataKeys = new Dictionary<HistogramValueDataKeys, string>
+            //                                                                                            {
+            //                                                                                                {
+            //                                                                                                    HistogramValueDataKeys.Count,
+            //                                                                                                    "countHist"
+            //                                                                                                },
+            //                                                                                                {
+            //                                                                                                    HistogramValueDataKeys.UserLastValue,
+            //                                                                                                    "userLast"
+            //                                                                                                },
+            //                                                                                                {
+            //                                                                                                    HistogramValueDataKeys.UserMinValue,
+            //                                                                                                    "userMin"
+            //                                                                                                },
+            //                                                                                                {
+            //                                                                                                    HistogramValueDataKeys.UserMaxValue,
+            //                                                                                                    "userMax"
+            //                                                                                                }
+            //                                                                                            };
 
-            public static readonly Dictionary<MeterValueDataKeys, string> CustomMeterDataKeys = new Dictionary<MeterValueDataKeys, string>
-                                                                                                {
-                                                                                                    { MeterValueDataKeys.Count, "countMeter" },
-                                                                                                    { MeterValueDataKeys.RateMean, "rateMean" }
-                                                                                                };
+            // public static readonly Dictionary<MeterValueDataKeys, string> CustomMeterDataKeys = new Dictionary<MeterValueDataKeys, string>
+            //                                                                                    {
+            //                                                                                        { MeterValueDataKeys.Count, "countMeter" },
+            //                                                                                        { MeterValueDataKeys.RateMean, "rateMean" }
+            //                                                                                    };
 
             public static readonly string[] SpecialChars = { @"\", @"/", " ", "-", "+", "=", "{", "}", "[", "]", ":", "&", "^", "~", "?", "!", "," };
 

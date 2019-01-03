@@ -45,6 +45,8 @@ namespace App.Metrics.Formatters.Elasticsearch
         /// <inheritdoc />
         public MetricsMediaTypeValue MediaType => new MetricsMediaTypeValue("text", "vnd.appmetrics.metrics.elasticsearch", "v1", "plain");
 
+        public MetricFields MetricFields { get; set; }
+
         /// <inheritdoc />
         public Task WriteAsync(
             Stream output,
@@ -64,10 +66,9 @@ namespace App.Metrics.Formatters.Elasticsearch
                     streamWriter,
                     _elasticsearchIndex,
                     _options.MetricNameFormatter,
-                    _options.MetricTagFormatter,
-                    _options.MetricNameMapping))
+                    _options.MetricTagFormatter))
                 {
-                    serializer.Serialize(textWriter, metricsData);
+                    serializer.Serialize(textWriter, metricsData, MetricFields);
                 }
             }
 
