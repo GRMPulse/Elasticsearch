@@ -5,7 +5,9 @@
   <PropertyGroup>
     <Description>Provides Elasticsearch reporting capability to App Metrics.</Description>
     <TargetFrameworks>netstandard1.6</TargetFrameworks>   
-    <PackageTags>appmetrics;reporting;elasticsearch</PackageTags>    
+    <PackageTags>appmetrics;reporting;elasticsearch</PackageTags>   
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>   
+    <PackageId>DataHawk.App.Metrics.Reporting.Elasticsearch</PackageId>    
   </PropertyGroup>
 
  <ItemGroup>
